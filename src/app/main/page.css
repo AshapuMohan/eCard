@@ -1,0 +1,13 @@
+.curved-connector-dark {
+  width: 150px;
+  height: 45px;
+  background: linear-gradient(to right, #000000, #0c0c0c);
+  border-radius: 18px;
+
+  border: 2px solid #222;
+  box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.45),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+
+  position: relative;
+}

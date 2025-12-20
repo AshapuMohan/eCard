@@ -1,0 +1,29 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  password  String
+  
+  // New eCard Fields
+  profession   String?
+  resumeUrl    String?
+  portfolioUrl String?
+  photoUrl     String? // Note: This stores text, real image upload needs S3
+  
+  // Storing complex data as JSON
+  skills       Json?   // Stores ["React", "NextJS"]
+  socials      Json?   // Stores { mail: "...", github: "..." }
+  projects     Json?   // Stores [{ name: "A", description: "url" }]
+
+  createdAt DateTime @default(now())
+}
