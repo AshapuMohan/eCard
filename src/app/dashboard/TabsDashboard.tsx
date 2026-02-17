@@ -19,7 +19,29 @@ export default function TabsDashboard() {
     const cardRef = useRef<HTMLDivElement>(null); // ✅ Ref for the card to download
     const [userId, setUserId] = useState<string | null>(null);
 
-    const [profile, setProfile] = useState({
+    interface Project {
+        name: string;
+        description: string;
+    }
+
+    interface Profile {
+        name: string;
+        profession: string;
+        photo: string;
+        skills: string[];
+        socials: {
+            mail: string;
+            linkedin: string;
+            github: string;
+            twitter: string;
+            phone: string;
+        };
+        resume: string;
+        portfolio: string;
+        projects: Project[];
+    }
+
+    const [profile, setProfile] = useState<Profile>({
         name: "",
         profession: "",
         photo: "",

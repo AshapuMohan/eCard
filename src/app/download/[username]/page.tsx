@@ -12,7 +12,7 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
     const [username, setUsername] = useState("");
     const [profile, setProfile] = useState<any>(null);
     const [loading, setLoading] = useState(true);
-    
+
     const frontRef = useRef<HTMLDivElement>(null);
     const backRef = useRef<HTMLDivElement>(null);
 
@@ -48,12 +48,12 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
         }
     };
 
-    const downloadImage = async (ref: React.RefObject<HTMLDivElement>, suffix: string) => {
+    const downloadImage = async (ref: any, suffix: string) => {
         if (ref.current === null) return;
         try {
             // Wait a small moment to ensure fonts/images render
-            const dataUrl = await toPng(ref.current, { 
-                cacheBust: true, 
+            const dataUrl = await toPng(ref.current, {
+                cacheBust: true,
                 backgroundColor: '#000000',
                 pixelRatio: 2 // Higher quality download
             });
@@ -82,7 +82,7 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
                     <div ref={frontRef} className="rounded-lg overflow-hidden">
                         <FrontCard profile={profile} />
                     </div>
-                    <button 
+                    <button
                         onClick={() => downloadImage(frontRef, "Front")}
                         className="mt-4 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
                     >
@@ -96,7 +96,7 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
                     <div ref={backRef} className="rounded-lg overflow-hidden">
                         <BackCard profile={profile} />
                     </div>
-                    <button 
+                    <button
                         onClick={() => downloadImage(backRef, "Back")}
                         className="mt-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition"
                     >
@@ -104,7 +104,7 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
                     </button>
                 </div>
             </div>
-            
+
             <Link href="/dashboard" className="mt-12 text-gray-500 hover:text-white">
                 &larr; Back to Dashboard
             </Link>
@@ -116,72 +116,72 @@ export default function DownloadPage({ params }: { params: Promise<{ username: s
 // CARD COMPONENTS (USING <img> INSTEAD OF <Image/>)
 // ---------------------------------------------------------
 function FrontCard({ profile }: { profile: any }) {
-    const getHref = (type: string, value: string) => { if (!value) return "#"; if (type === "mail" && !value.startsWith("mailto:")) return `mailto:${value}`; if (type === "phone" && !value.startsWith("tel:")) return `tel:${value}`; return value; }; 
-    const socials = profile.socials || {}; 
+    const getHref = (type: string, value: string) => { if (!value) return "#"; if (type === "mail" && !value.startsWith("mailto:")) return `mailto:${value}`; if (type === "phone" && !value.startsWith("tel:")) return `tel:${value}`; return value; };
+    const socials = profile.socials || {};
     const skills = Array.isArray(profile.skills) ? profile.skills : [];
-    
-    return ( 
-        <div className="grid h-[250px] w-[450px] text-start bg-black"> 
-            <div className="bg-transparent border border-zinc-600 p-4 flex rounded-lg m-2 justify-between shadow-md overflow-hidden"> 
+
+    return (
+        <div className="grid h-[250px] w-[450px] text-start bg-black">
+            <div className="bg-transparent border border-zinc-600 p-4 flex rounded-lg m-2 justify-between shadow-md overflow-hidden">
                 {/* Standard <img> tag works better with html-to-image */}
-                <img 
-                    src={profile.photo || "/Mohan.jpg"} 
-                    alt="Profile" 
+                <img
+                    src={profile.photo || "/Mohan.jpg"}
+                    alt="Profile"
                     crossOrigin="anonymous"
-                    className="rounded-md my-auto object-cover h-[150px] w-[130px] bg-zinc-800" 
-                /> 
-                <div className="pl-4 flex-1 flex flex-col justify-center"> 
-                    <h2 className="text-xl font-bold text-white mb-1 truncate">{profile.name || "Name"}</h2> 
-                    <p className="text-sm font-semibold text-blue-400 mb-2 truncate">{profile.profession || "Profession"}</p> 
-                    <h3 className="text-xs font-semibold text-gray-400 mb-2">Tech Stack:</h3> 
-                    <div className="flex flex-wrap gap-1 max-h-[80px] overflow-hidden content-start"> 
-                        {skills.slice(0, 8).map((skill: string, idx: number) => ( <span key={idx} className="bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded-full border border-gray-700">{skill}</span> ))} 
-                    </div> 
-                    <div className="social-icons flex mt-auto pt-2"> 
-                        <ul className="flex space-x-4"> 
-                            {socials.mail && <li><a href={getHref('mail', socials.mail)} className="text-gray-300 hover:text-white"><FaEnvelope size={18} /></a></li>} 
-                            {socials.github && <li><a href={socials.github} target="_blank" className="text-gray-300 hover:text-white"><FaGithub size={18} /></a></li>} 
-                            {socials.linkedin && <li><a href={socials.linkedin} target="_blank" className="text-gray-300 hover:text-white"><FaLinkedin size={18} /></a></li>} 
-                            {socials.twitter && <li><a href={socials.twitter} target="_blank" className="text-gray-300 hover:text-white"><FaTwitter size={18} /></a></li>} 
-                            {socials.phone && <li><a href={getHref('phone', socials.phone)} className="text-gray-300 hover:text-white"><FaPhone size={18} /></a></li>} 
-                        </ul> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
+                    className="rounded-md my-auto object-cover h-[150px] w-[130px] bg-zinc-800"
+                />
+                <div className="pl-4 flex-1 flex flex-col justify-center">
+                    <h2 className="text-xl font-bold text-white mb-1 truncate">{profile.name || "Name"}</h2>
+                    <p className="text-sm font-semibold text-blue-400 mb-2 truncate">{profile.profession || "Profession"}</p>
+                    <h3 className="text-xs font-semibold text-gray-400 mb-2">Tech Stack:</h3>
+                    <div className="flex flex-wrap gap-1 max-h-[80px] overflow-hidden content-start">
+                        {skills.slice(0, 8).map((skill: string, idx: number) => (<span key={idx} className="bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded-full border border-gray-700">{skill}</span>))}
+                    </div>
+                    <div className="social-icons flex mt-auto pt-2">
+                        <ul className="flex space-x-4">
+                            {socials.mail && <li><a href={getHref('mail', socials.mail)} className="text-gray-300 hover:text-white"><FaEnvelope size={18} /></a></li>}
+                            {socials.github && <li><a href={socials.github} target="_blank" className="text-gray-300 hover:text-white"><FaGithub size={18} /></a></li>}
+                            {socials.linkedin && <li><a href={socials.linkedin} target="_blank" className="text-gray-300 hover:text-white"><FaLinkedin size={18} /></a></li>}
+                            {socials.twitter && <li><a href={socials.twitter} target="_blank" className="text-gray-300 hover:text-white"><FaTwitter size={18} /></a></li>}
+                            {socials.phone && <li><a href={getHref('phone', socials.phone)} className="text-gray-300 hover:text-white"><FaPhone size={18} /></a></li>}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 
 function BackCard({ profile }: { profile: any }) {
-    const projects = Array.isArray(profile.projects) ? profile.projects : []; 
-    return ( 
-        <div className="grid h-[250px] w-[450px] text-start bg-black"> 
-            <div className="bg-transparent border border-zinc-600 p-4 flex rounded-lg m-2 justify-between shadow-md"> 
-                <div className="flex flex-col space-y-4 w-1/2"> 
-                    <div> 
-                        <p className="font-medium text-gray-300 text-sm mb-2">Resume</p> 
-                        {profile.resume ? ( <a href={profile.resume} target="_blank" className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 cursor-pointer"> <img width={20} height={20} src="/file.svg" alt="Resume" /> <span className="text-xs truncate max-w-[120px]">View Resume</span> </a> ) : <span className="text-xs text-gray-600">No link</span>} 
-                    </div> 
-                    <div className="overflow-hidden"> 
-                        <p className="font-medium text-gray-300 text-sm mb-2">Projects</p> 
-                        <div className="flex flex-col space-y-2 max-h-[140px] overflow-y-auto pr-1"> 
-                            {projects.map((proj: any, idx: number) => ( <a key={idx} href={proj.description} target="_blank" className="flex items-center space-x-2 hover:bg-zinc-800 p-1 rounded transition"> <img src="/globe.svg" alt="web" width={14} height={14} /> <span className="text-xs text-blue-300 truncate w-full">{proj.name}</span> </a> ))} 
-                        </div> 
-                    </div> 
-                </div> 
-                <div className="flex flex-col items-center justify-between w-1/2 pl-4"> 
-                    <div className="flex flex-col items-center mt-2"> 
-                        <p className="text-xs text-gray-400 mb-2">Scan for Portfolio</p> 
-                        <div className="bg-white p-2 rounded-md"> 
-                            <QRCodeSVG value={profile.portfolio || "https://example.com"} size={125} level={"L"} /> 
-                        </div> 
-                    </div> 
-                    <div className="text-center mb-1"> 
-                        <p className="text-sm font-semibold text-white">{profile.name}</p> 
-                        <p className="text-[10px] text-gray-400">{profile.profession}</p> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
+    const projects = Array.isArray(profile.projects) ? profile.projects : [];
+    return (
+        <div className="grid h-[250px] w-[450px] text-start bg-black">
+            <div className="bg-transparent border border-zinc-600 p-4 flex rounded-lg m-2 justify-between shadow-md">
+                <div className="flex flex-col space-y-4 w-1/2">
+                    <div>
+                        <p className="font-medium text-gray-300 text-sm mb-2">Resume</p>
+                        {profile.resume ? (<a href={profile.resume} target="_blank" className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 cursor-pointer"> <img width={20} height={20} src="/file.svg" alt="Resume" /> <span className="text-xs truncate max-w-[120px]">View Resume</span> </a>) : <span className="text-xs text-gray-600">No link</span>}
+                    </div>
+                    <div className="overflow-hidden">
+                        <p className="font-medium text-gray-300 text-sm mb-2">Projects</p>
+                        <div className="flex flex-col space-y-2 max-h-[140px] overflow-y-auto pr-1">
+                            {projects.map((proj: any, idx: number) => (<a key={idx} href={proj.description} target="_blank" className="flex items-center space-x-2 hover:bg-zinc-800 p-1 rounded transition"> <img src="/globe.svg" alt="web" width={14} height={14} /> <span className="text-xs text-blue-300 truncate w-full">{proj.name}</span> </a>))}
+                        </div>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center justify-between w-1/2 pl-4">
+                    <div className="flex flex-col items-center mt-2">
+                        <p className="text-xs text-gray-400 mb-2">Scan for Portfolio</p>
+                        <div className="bg-white p-2 rounded-md">
+                            <QRCodeSVG value={profile.portfolio || "https://example.com"} size={125} level={"L"} />
+                        </div>
+                    </div>
+                    <div className="text-center mb-1">
+                        <p className="text-sm font-semibold text-white">{profile.name}</p>
+                        <p className="text-[10px] text-gray-400">{profile.profession}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

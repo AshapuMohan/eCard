@@ -11,7 +11,7 @@ export default function Login() {
   const [error, setError] = useState(""); // Uncommented
   const [success, setSuccess] = useState(""); // Uncommented
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -31,7 +31,7 @@ export default function Login() {
       // Check if response is JSON to avoid "Unexpected token <" error
       const contentType = res.headers.get("content-type");
       let data;
-      
+
       if (contentType && contentType.includes("application/json")) {
         data = await res.json();
       } else {
@@ -49,7 +49,7 @@ export default function Login() {
       console.log("User:", data.user);
       // Store the Unique ID, not just the name
       localStorage.setItem("eCardUserId", data.user.id);
-      
+
       // Store name just for the share link fallback
       localStorage.setItem("eCardName", data.user.name);
       // Redirect to dashboard after 1 second
@@ -72,7 +72,7 @@ export default function Login() {
         <div className="mb-4">
           <label className="block mb-2" htmlFor="username">Username</label>
           <input
-            className="w-full p-2 border border-gray-700 rounded text-white" 
+            className="w-full p-2 border border-gray-700 rounded text-white"
             type="text"
             id="username"
             value={name}
