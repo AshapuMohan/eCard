@@ -1,21 +1,19 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    
+
     // We expect userId to be sent from the frontend now
     const { userId, ...profileData } = body;
 
     if (!userId) {
-        return NextResponse.json({ message: "User ID is required" }, { status: 400 });
+      return NextResponse.json({ message: "User ID is required" }, { status: 400 });
     }
 
     const updatedUser = await prisma.user.update({
-      where: { id: parseInt(userId) }, 
+      where: { id: parseInt(userId) },
       data: {
         name: profileData.name, // Allow name update
         profession: profileData.profession,

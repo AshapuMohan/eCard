@@ -1,11 +1,7 @@
 // app/api/auth/signup/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-
-// Initialize Prisma Client
-// (Best practice: utilize a singleton pattern in production, but this works for now)
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {

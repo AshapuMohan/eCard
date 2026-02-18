@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   try {
@@ -13,17 +11,17 @@ export async function GET(req: Request) {
 
     // 1. If ID is provided, fetch by ID (Used by Dashboard)
     if (id) {
-        user = await prisma.user.findUnique({
-            where: { id: parseInt(id) },
-        });
-    } 
+      user = await prisma.user.findUnique({
+        where: { id: parseInt(id) },
+      });
+    }
     // 2. If Name is provided, fetch by Name (Used by Share Page)
     else if (name) {
-        user = await prisma.user.findUnique({
-            where: { name: name },
-        });
+      user = await prisma.user.findUnique({
+        where: { name: name },
+      });
     } else {
-        return NextResponse.json({ message: "ID or Name required" }, { status: 400 });
+      return NextResponse.json({ message: "ID or Name required" }, { status: 400 });
     }
 
     if (!user) {

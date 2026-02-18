@@ -1,9 +1,7 @@
 // app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
@@ -43,9 +41,9 @@ export async function POST(req: Request) {
 
     // 5. Success (You can set cookies here if using JWT later)
     return NextResponse.json(
-      { 
-        message: "Login successful", 
-        user: { id: user.id, name: user.name } 
+      {
+        message: "Login successful",
+        user: { id: user.id, name: user.name }
       },
       { status: 200 }
     );
