@@ -3,10 +3,10 @@ import { PrismaClient } from '@prisma/client';
 const prismaClientSingleton = () => {
     if (process.env.NODE_ENV === 'production') {
         console.log("Initializing Prisma Client in production...");
-        if (!process.env.POSTGRES_PRISMA_URL) {
-            console.error("CRITICAL ERROR: POSTGRES_PRISMA_URL is undefined in production environment!");
+        if (!process.env.DATABASE_URL) {
+            console.error("CRITICAL ERROR: DATABASE_URL is undefined in production environment!");
         } else {
-            console.log("POSTGRES_PRISMA_URL is defined. Length:", process.env.POSTGRES_PRISMA_URL.length);
+            console.log("DATABASE_URL is defined. Length:", process.env.DATABASE_URL.length);
         }
     }
     return new PrismaClient();
